@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "github.com/preetDev004/gRPC-ISC/orders";
+
+service OrderService {
+  rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+}
+
+message Order {
+  int32 OrderID    = 1;
+  int32 CustomerID = 2;
+  int32 ProductID  = 3;
+  int32 Quantity   = 4;
+}
+
+message CreateOrderRequest {
+  int32 CustomerID = 1;
+  int32 ProductID  = 2;
+  int32 Quantity   = 3;
+}
+
+message CreateOrderResponse {
+  string Status = 1;
+}
+
+message GetOrderRequest {
+  int32 CustomerID = 1;
+}
+
+message GetOrderResponse {
+  repeated Order orders = 1;
+}
