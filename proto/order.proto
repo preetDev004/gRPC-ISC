@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package shop;
+
+option go_package = "github.com/preetDev004/gRPC-ISC/gen";
+
+import "product.proto";
+import "google/protobuf/timestamp.proto";
+
+// ── Order Service ────────────────────────────────────────────────────────────
+// Accepts orders and internally calls ShippingService over gRPC to create
+// a shipment — demonstrating service-to-service gRPC communication.
+
+service OrderService {
+  rpc PlaceOrder(PlaceOrderRequest)   returns (PlaceOrderResponse);
+  rpc GetOrder  (GetOrderRequest)     returns (GetOrderResponse);
+  rpc ListOrders(ListOrdersRequest)   returns (stream ListOrdersResponse);
+}
+
+message PlaceOrderRequest {
+  string product_id = 1;
+  int32  quantity   = 2;
+  string customer   = 3;
+  string address    = 4;
+}
+
+message PlaceOrderResponse {
+  string order_id     = 1;
+  string shipping_id  = 2;
+  string status       = 3;
+  double total_usd    = 4;
+}
+
+message GetOrderRequest {
+  string order_id = 1;
+}
+
+message ListOrdersRequest {
+  string customer = 1; // empty = all
+}
+
+message GetOrderResponse {
+  Order order = 1;
+}
+
+message ListOrdersResponse {
+  Order order = 1;
+}
+
+message Order {
+  string    id          = 1;
+  string    customer    = 2;
+  string    address     = 3;
+  Product   product     = 4;
+  int32     quantity    = 5;
+  double    total_usd   = 6;
+  string    status      = 7;
+  string    shipping_id = 8;
+  google.protobuf.Timestamp created_at = 9;
+}

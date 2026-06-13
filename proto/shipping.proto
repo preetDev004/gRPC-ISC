@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package shop;
+
+option go_package = "github.com/preetDev004/gRPC-ISC/gen";
+
+import "google/protobuf/timestamp.proto";
+
+// ── Shipping Service ─────────────────────────────────────────────────────────
+// Called internally by OrderService (gRPC client → gRPC server).
+// Also exposes TrackShipment as a server-streaming RPC so the frontend can
+// watch status updates roll in over time.
+
+service ShippingService {
+  rpc CreateShipment (CreateShipmentRequest)  returns (CreateShipmentResponse);
+  rpc TrackShipment  (TrackShipmentRequest)   returns (stream TrackShipmentResponse);
+}
+
+message CreateShipmentRequest {
+  string order_id  = 1;
+  string customer  = 2;
+  string address   = 3;
+  string product   = 4;
+  int32  quantity  = 5;
+}
+
+message CreateShipmentResponse {
+  string shipping_id       = 1;
+  string carrier           = 2;
+  string tracking_number   = 3;
+  string estimated_arrival = 4;
+}
+
+message TrackShipmentRequest {
+  string shipping_id = 1;
+}
+
+message TrackShipmentResponse {
+  ShipmentUpdate update = 1;
+}
+
+message ShipmentUpdate {
+  string    shipping_id = 1;
+  string    status      = 2;          // PROCESSING, DISPATCHED, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERED
+  string    location    = 7;
+  string    note        = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
