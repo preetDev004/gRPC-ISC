@@ -117,4 +117,7 @@ grpcurl -plaintext -d '{}' localhost:9003 shop.OrderService/ListOrders
 ---
 
 ### Output
+<img width="1918" height="961" alt="Screenshot 2026-06-13 at 12 45 19 PM" src="https://github.com/user-attachments/assets/b551f2d9-065f-41bb-ad8a-9e1ce95c75a4" />
+<img width="1914" height="956" alt="Screenshot 2026-06-13 at 12 45 50 PM" src="https://github.com/user-attachments/assets/a08b0c50-f10e-4c58-a179-9e216a0a40d3" />
+
 
