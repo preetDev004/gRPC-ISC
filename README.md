@@ -1,6 +1,6 @@
 # grpc-isc
 
-Learning inter-service communication (Go + gRPC): browse a product catalogue, place orders,
+Inter-service communication (Go + gRPC): browse a product catalogue, place orders,
 and watch live shipment tracking wired together through real gRPC streams.
 
 ```
