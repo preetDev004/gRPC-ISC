@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package shop;
+
+option go_package = "github.com/preetDev004/gRPC-ISC/gen";
+
+// ── Product Service ─────────────────────────────────────────────────────────
+// Streams the product catalogue to any caller (order-service, frontend via
+// the HTTP gateway).
+
+service ProductService {
+  // Server-side streaming: sends every product one by one.
+  rpc ListProducts(ListProductsRequest) returns (stream ListProductsResponse);
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+}
+
+message ListProductsRequest {
+  string category_filter = 1; // empty = all categories
+}
+
+message GetProductRequest {
+  string product_id = 1;
+}
+
+message ListProductsResponse {
+  Product product = 1;
+}
+
+message GetProductResponse {
+  Product product = 1;
+}
+
+message Product {
+  string id          = 1;
+  string name        = 2;
+  string description = 3;
+  string category    = 4;
+  double price_usd   = 5;
+  int32  stock       = 6;
+  string image_emoji = 7; // lightweight stand-in for a real image URL
+}
